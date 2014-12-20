@@ -1,0 +1,39 @@
+{
+  "name": "file-io-server",
+  "version": "1.0.0",
+  "description": "A simple static file server that can load and save files using get and post. Great for tool-based JSON editting.",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Tomasz Dysinski",
+    "email": "oz@bunnybones.com",
+    "url": "https://github.com/bunnybones1"
+  },
+  "dependencies": {
+    "chalk": "^0.5.1",
+    "connect": "^3.3.3",
+    "lodash": "^2.4.1",
+    "mime-types": "^2.0.4",
+    "mkdirp": "^0.5.0",
+    "serve-static": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "file",
+    "io",
+    "server",
+    "get",
+    "post"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bunnybones1/file-io-server.git"
+  },
+  "homepage": "https://github.com/bunnybones1/file-io-server",
+  "bugs": {
+    "url": "https://github.com/bunnybones1/file-io-server/issues"
+  }
+}
