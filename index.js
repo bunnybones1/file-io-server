@@ -4,6 +4,7 @@ var path = require('path'),
 	chalk = require('chalk'),
 	mime = require('mime-types'),
 	mkdirp = require('mkdirp'),
+	cors = require('cors'),
 	connect = require('connect');
 
 function fileIOServer(params) {
@@ -22,7 +23,7 @@ function fileIOServer(params) {
 	    res.setHeader('Access-Control-Allow-Origin', '*');
 	    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, OPTIONS, POST');
 	    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-	    if(debugLevel >= 2) console.log('headers added for', req.method, req.url);
+	    if(params.debugLevel >= 2) console.log('headers added for', req.method, req.url);
 	    next();
 	}
 	app.use(allowCrossDomain);
@@ -32,8 +33,12 @@ function fileIOServer(params) {
 		msg = msg || 'hello world';
 
 		return function(req, res) {
-			if(req.method == 'PUT') {
-				if(params.debugLevel >= 1) console.log('putting', req.url);
+			if(req.method == 'OPTIONS') {
+				if(params.debugLevel >= 1) console.log('requesting', req.method, req.url);
+				res.writeHead(200, { 'Content-Type': mime.lookup('index.html')});
+				res.end('preflight?');
+			} else if(req.method == 'PUT') {
+				if(params.debugLevel >= 1) console.log('putting', req.method, req.url);
 				var filePath = path.resolve(servePath + '/' + req.url);
 				var fileExists = fs.existsSync(filePath);
 				var responseStatus =  fileExists ? 200 : 201;
