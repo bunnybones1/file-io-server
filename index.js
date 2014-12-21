@@ -18,6 +18,13 @@ function fileIOServer(params) {
 
 	var serveStatic = require('serve-static');
 	var app = connect();
+	var allowCrossDomain = function(req, res, next) {
+	    res.setHeader('Access-Control-Allow-Origin', '*');
+	    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT');
+	    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	    next();
+	}
+	app.use(allowCrossDomain);
 	app.use(serveStatic(servePath));
 
 	function respond(msg) {
@@ -47,10 +54,6 @@ function fileIOServer(params) {
 
 							req.on('end', function() {
 								if(params.debugLevel >= 2) console.log('there will be no more data.');
-
-								res.setHeader("Access-Control-Allow-Origin", "*");
-								res.setHeader("Access-Control-Allow-Methods", "GET, PUT");
-								res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 								res.writeHead(responseStatus, { 'Content-Type': mime.lookup(req.url)});
 								res.end((fileExists ? 'file updated: ' : 'new file saved: ') + filePath );
 								if(params.debugLevel >= 1) console.log('file put complete.');
