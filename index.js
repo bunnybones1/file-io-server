@@ -35,7 +35,7 @@ function fileIOServer(params) {
 		return function(req, res) {
 			if(req.method == 'OPTIONS') {
 				if(params.debugLevel >= 1) console.log('requesting', req.method, req.url);
-				res.writeHead(200, { 'Content-Type': mime.lookup('index.html')});
+				res.writeHead(200);
 				res.end('preflight?');
 			} else if(req.method == 'PUT') {
 				if(params.debugLevel >= 1) console.log('putting', req.method, req.url);
