@@ -1,6 +1,6 @@
 {
   "name": "file-io-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple static file server that can load and save files using get and post. Great for tool-based JSON editting.",
   "main": "index.js",
   "license": "MIT",
