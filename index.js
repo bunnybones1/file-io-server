@@ -20,8 +20,9 @@ function fileIOServer(params) {
 	var app = connect();
 	var allowCrossDomain = function(req, res, next) {
 	    res.setHeader('Access-Control-Allow-Origin', '*');
-	    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
+	    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, OPTIONS, POST');
 	    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+	    if(debugLevel >= 2) console.log('headers added for', req.method, req.url);
 	    next();
 	}
 	app.use(allowCrossDomain);
