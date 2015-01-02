@@ -51,18 +51,24 @@ function fileIOServer(params) {
 							if(started) return;
 							started = true;
 							if(params.debugLevel >= 2) console.log('there is some data to read now');
-							req.on('data', function(chunk) {
-								if(params.debugLevel >= 2) console.log('got %d bytes of data', chunk.length);
-							})
-							var writable = fs.createWriteStream(filePath);
-							// All the data from readable goes into 'file.txt'
-							req.pipe(writable);
 
-							req.on('end', function() {
-								if(params.debugLevel >= 2) console.log('there will be no more data.');
+							var writable = fs.createWriteStream(filePath);
+							
+							writable.on('finish', function() {
 								res.writeHead(responseStatus, { 'Content-Type': mime.lookup(req.url)});
 								res.end((fileExists ? 'file updated: ' : 'new file saved: ') + filePath );
 								if(params.debugLevel >= 1) console.log('file put complete.');
+							})
+
+							// All the data from readable goes into 'file.txt'
+							req.pipe(writable);
+
+							req.on('data', function(chunk) {
+								if(params.debugLevel >= 2) console.log('got %d bytes of data', chunk.length);
+							})
+
+							req.on('end', function() {
+								if(params.debugLevel >= 2) console.log('there will be no more data.');
 							});
 						});
 					}
