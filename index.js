@@ -5,7 +5,14 @@ var path = require('path'),
 	mime = require('mime-types'),
 	mkdirp = require('mkdirp'),
 	cors = require('cors'),
+	base64 = require('base64-stream'),
 	connect = require('connect');
+
+var base64Formats = [
+	'png',
+	'jpg',
+	'jpeg'
+];
 
 function fileIOServer(params) {
 	params = _.merge({
@@ -40,6 +47,12 @@ function fileIOServer(params) {
 			} else if(req.method == 'PUT') {
 				if(params.debugLevel >= 1) console.log('putting', req.method, req.url);
 				var filePath = path.resolve(servePath + '/' + req.url);
+				var isBase64 = base64Formats.some(function(extension) {
+					if(req.url.lastIndexOf('.' + extension) == req.url.length - extension.length - 1) {
+						return true;
+					}
+					return false;
+				});
 				var fileExists = fs.existsSync(filePath);
 				var responseStatus =  fileExists ? 200 : 201;
 				var started = false;
@@ -61,7 +74,11 @@ function fileIOServer(params) {
 							})
 
 							// All the data from readable goes into 'file.txt'
-							req.pipe(writable);
+							if(isBase64) {
+								req.pipe(base64.decode()).pipe(writable);
+							} else {
+								req.pipe(writable);
+							}
 
 							req.on('data', function(chunk) {
 								if(params.debugLevel >= 2) console.log('got %d bytes of data', chunk.length);

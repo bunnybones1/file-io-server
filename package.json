@@ -1,7 +1,7 @@
 {
   "name": "file-io-server",
   "version": "1.0.6",
-  "description": "A simple static file server that can load and save files using get and post. Great for tool-based JSON editting.",
+  "description": "A simple static file server that can load and save files using get and post. Great for tool-based JSON editting or saving generated images.",
   "main": "index.js",
   "license": "MIT",
   "author": {
@@ -10,6 +10,7 @@
     "url": "https://github.com/bunnybones1"
   },
   "dependencies": {
+    "base64-stream": "^0.1.2",
     "chalk": "^0.5.1",
     "connect": "^3.3.3",
     "cors": "^2.5.2",

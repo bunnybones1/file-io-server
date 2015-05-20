@@ -2,7 +2,7 @@
 
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
-A simple static file server that can load and save files using get and post. Great for tool-based JSON editting.
+A simple static file server that can load and save files using get and post. Great for tool-based JSON editting or saving generated images.
 
 ## Usage
 
